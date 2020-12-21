@@ -1,0 +1,59 @@
+
+  .btn {
+    margin: 5px;
+    cursor: pointer;
+    transition-duration: 0.4s;
+    color: white;
+  }
+
+  .form-group {
+    margin: 10px;
+  }
+
+  .red {
+    margin-top: 5px;
+    margin-left: 5px;
+  }
+
+  #errorlogin {
+    color: black;
+    font-size: 1em;
+  }
+
+  #erroremail {
+    color: black;
+    font-size: 1em;
+  }
+
+  #errorpassword {
+    color: black;
+    font-size: 1em;
+  }
+
+  #burger {
+    margin-bottom: 10px;
+  }
+
+  #login {
+    background-color: #366e9d;
+  }
+
+  #login:hover{
+    background-color: #4da8f3;
+  }
+
+  #reg {
+    background-color: darkgreen;
+  }
+
+  #reg:hover {
+    background-color: rgb(5, 170, 5);
+  }
+
+  #admin {
+    background-color: black;
+  }
+ 
+  #admin:hover {
+    background-color: rgb(112, 108, 108);
+  }
