@@ -1,9 +1,9 @@
 
   .btn {
-    margin: 5px;
     cursor: pointer;
     transition-duration: 0.4s;
     color: white;
+    margin: 5px;
   }
 
   .form-group {
@@ -56,4 +56,26 @@
  
   #admin:hover {
     background-color: rgb(112, 108, 108);
+  }
+
+  @media screen and (max-width: 600px){
+    #login {
+      background-color: #366e9d;
+      width: 100%;
+      margin: 0%;
+      margin-bottom: 10px;
+    }
+
+    #reg {
+      background-color: darkgreen;
+      width: 100%;
+      margin: 0%;
+      margin-bottom: 10px;
+    }
+
+    #admin {
+      background-color: black;
+      width: 100%;
+      margin: 0%;
+    }
   }

@@ -40,33 +40,30 @@ const App = (function(UICtrl, UserCtrl, ValidationCtrl, StorageCtrl){
 
     //a regisztráció végrehajtása
     const userAddSubmit = function(e){
-        if(e.target.classList.contains('regconfirm-button') && ValidationCtrl.validateEmail(e)===true && ValidationCtrl.validatePassword(e)===true && ValidationCtrl.uniqueEmail(e)===true){
+        if(e.target.classList.contains('regconfirm-button') && ValidationCtrl.validateEmail(e)===true && ValidationCtrl.validatePassword(e)===true /*&& ValidationCtrl.uniqueEmail(e)===true*/){
+            console.log("error");
             const input = UICtrl.getItemInput();
             let counter = 0;
             const newUser = UserCtrl.addItem(input.firstName, input.lastName, input.email, input.password);
-            const users = UserCtrl.getItems();
-            users.then(data =>
-                data.forEach(function(user){
-                    if(counter === 0){
-                        console.log("what the fuck");
-                        StorageCtrl.storeUser('http://localhost:3000/users', newUser)
-                        .then(elek => UICtrl.showRegistrationSuccess());
-                        counter = 1;
-                        window.addEventListener('beforeunload', (event) => {
-                            // Cancel the event as stated by the standard.
-                            event.preventDefault();
-                            // Chrome requires returnValue to be set.
-                            event.returnValue = '';
-                          });
-                    }   
-            }));
-            e.preventDefault();
+            
+            if(counter === 0){
+                StorageCtrl.storeUser('http://localhost:3000/users', newUser)
+                .then(elek => UICtrl.showRegistrationSuccess());
+
+                window.addEventListener('beforeunload', (event) => {
+                    // Cancel the event as stated by the standard.
+                    event.preventDefault();
+                    // Chrome requires returnValue to be set.
+                    event.returnValue = '';
+                  });
+            }   
         }
     }
 
     //a bejelentkezési adatok ellenőrzése és a bejelentkezés végrehajtása
     const loginSubmit = function(e){
         if(e.target.classList.contains('loginconfirm-button')){
+            
             const input = UICtrl.getLoginInput();
             const users = UserCtrl.getItems();
             let counter = 0;

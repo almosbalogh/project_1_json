@@ -43,9 +43,11 @@ export const ValidationCtrl = (function(UICtrl, UserCtrl){
                 messages.push('A megadott e-mail címmel már regisztráltak!');
                 e.preventDefault();
                 errorElement.innerText = messages.join(', ');
+                console.log("false");
                 return false;
             }
             else{
+                console.log("true");
                 return true;
             }
         },
