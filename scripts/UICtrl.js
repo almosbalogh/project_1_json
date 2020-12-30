@@ -1,7 +1,7 @@
-import {UserCtrl} from './UserCtrl.js';
+import {UserCtrl} from './userctrl.js';
 
 export const UICtrl = (function(){
-    //a html selectotok deklarálása
+    //declaring the html selectors
     const UISelectors = {
         playfield: '#playfield',
         regBtn: '#reg',
@@ -28,7 +28,7 @@ export const UICtrl = (function(){
     }
 
     return {
-        //a regisztrációs felület létrehozása dom manipulációval
+        //rendering the registration form by dom manipulation
         showRegForm: function(){
             let html = '';
             html += `
@@ -66,7 +66,7 @@ export const UICtrl = (function(){
             document.querySelector(UISelectors.playfield).innerHTML = html;
         },
 
-        //sikeres regisztráció üzenete
+        //message about the successful registration
         showRegistrationSuccess: function(){
             let html = '';
             html += `<h3 class="center-align">Sikeres regisztráció!</h3>`;
@@ -74,7 +74,7 @@ export const UICtrl = (function(){
             console.log("második");
         },
 
-        //a bejelentkezési felület létrehozása dom manipulációval
+        //rendering the login form by dom manipulation
         showLogForm: function(){
             let html = '';
             html += `<div class="col-md-3 mx-auto" style="width: 300px;" id="logForm">
@@ -96,14 +96,14 @@ export const UICtrl = (function(){
         document.querySelector(UISelectors.playfield).innerHTML = html; 
         },
 
-        //a sikeres belépés üzenete
+        //message about the successful login
         showLoginSuccess: function(){
             let html = '';
             html += `<h3 class="center-align">Sikeres bejelentkezés!</h3>`;
             document.querySelector(UISelectors.playfield).innerHTML = html;
         },
 
-        //hibaüzenet sikertelen bejelentkezésnél
+        //error message if the login failed
         showLoginFailed: function(){
             let messages = [];
             const errorElement = document.getElementById('errorlogin');
@@ -112,7 +112,7 @@ export const UICtrl = (function(){
             errorElement.innerText = messages.join(', ');
         },
         
-        //az admin felületen található user lista létrehozása dom manipulációval
+        //rendering the user list on the admin window by dom manipulation
         showUserList: function(items){
             let html = `<h1>Felhasználók</h1><br>
             `;
@@ -130,14 +130,14 @@ export const UICtrl = (function(){
             document.querySelector(UISelectors.playfield).innerHTML = html;
         },
 
-        //üzenet abban az esetben ha még nincs user
+        //message if the user list is empty
         noUser: function(){
             let html = '';
             html += `<h3 class="center-align">Nincs egy felhasználó sem.</h3>`;
             document.querySelector(UISelectors.playfield).innerHTML = html;
         },
 
-        //a regisztrációs formon megadott felhasználói inputok(név, email stb.)
+        //reading the user input from the registration form
         getItemInput: function(){
             return{
                 firstName:document.querySelector(UISelectors.firstNameInput).value,
@@ -148,7 +148,7 @@ export const UICtrl = (function(){
             }
         },
 
-        //a szerkesztés felületen megadott felhasználói inputok(név, email stb.)
+        //reading the user inputs from the 'edit user' form
         getEditInput: function(){
             return{
                 firstName:document.querySelector(UISelectors.editFirstNameInput).value,
@@ -159,7 +159,7 @@ export const UICtrl = (function(){
             }
         },
 
-        //a bejelentkezés felületen megadott felhasználói inputok(email és jelszó)
+        //reading the user inputs from the login form
         getLoginInput: function(){
             return{
                 loginEmail:document.querySelector(UISelectors.loginEmail).value,
@@ -167,7 +167,7 @@ export const UICtrl = (function(){
             }
         },
 
-        //a szerkeszteni kívént user adatai automatiksan felvitelre kerülnek a szerkesztési felületre
+        //loading the choosen user's data to the edit modal
         addUserToForm: function(){
             document.querySelector(UISelectors.editFirstNameInput).value = UserCtrl.getCurrentItem().firstName;
             document.querySelector(UISelectors.editLastNameInput).value = UserCtrl.getCurrentItem().lastName;
@@ -176,10 +176,9 @@ export const UICtrl = (function(){
             document.querySelector(UISelectors.editScndPasswordInput).value = UserCtrl.getCurrentItem().password;
         },
 
-        //a frissített(szerkesztett) user adatinak frissítése a megjelenített listában
+        //refreshing the user list after a user was updated/edited
         updateListItem: function(item){
             let listItems = document.querySelectorAll(".list-group-item");
-            
             listItems = Array.from(listItems);
       
             listItems.forEach(function(listItem){
@@ -194,14 +193,14 @@ export const UICtrl = (function(){
             });
           },
 
-        //a törölt user kivétele a listából
+        //cutting the deleted user from the user list
         deleteListItem: function(id){
             const itemID = `#item-${id}`;
             const item = document.querySelector(itemID);
             item.remove();
         },
 
-        //a UISelectorok gettere
+        //the UISelectors's getter
         getSelectors: function(){
             return UISelectors;
         }

@@ -1,6 +1,6 @@
-import {StorageCtrl} from './StorageCtrl.js';
+import {StorageCtrl} from './storagectrl.js';
 
-//A User objektum és a data konstans struktúrája és metódusai
+//the User object and data constant 
 export const UserCtrl = (function(){
     const User = function(id, firstName, lastName, email, password) {
         this.id = id;
@@ -18,12 +18,12 @@ export const UserCtrl = (function(){
     }
 
     return{
-        //a data-ban szereplő elemek gettere
+        //the getters of the elements in data
         getItems: function(){
             return data.items;
         },
 
-        //új user data.items-hez való adása
+        //adding new user to data.items
         addItem: function(lastName, firstName, email, password){
             let ID;
             if(data.items.length > 0){
@@ -33,11 +33,10 @@ export const UserCtrl = (function(){
                 ID = 0;
             }
             let newUser = new User(ID, firstName, lastName, email, password);
-           /* data.items.push(newUser);*/
             return newUser;
         },
 
-        //az adott user megkeresése id alapján
+        //searching a user by id
         getItemById: async function(id){
             let found = null;
             await data.items
@@ -49,7 +48,7 @@ export const UserCtrl = (function(){
             return found;
         },
 
-        //items-ben szereplő user frissítése
+        //updating the user in data.items
         updateUser: async function(lastName, firstName, email, password){
             let found = null;
             await data.items
@@ -65,7 +64,7 @@ export const UserCtrl = (function(){
             return found;
         },
 
-        //items-ben szereplő user törlése id alapján
+        //deleting a user from data.items by id
         deleteUser: function(id){
             const ids = data.items.map(function(item){
               return item.id;
@@ -74,11 +73,11 @@ export const UserCtrl = (function(){
             data.items.splice(index, 1);
         },
 
-        //az aktuálisan kiválszott user settere
+        //the setter of the choosen user
         setCurrentItem: function(item){
             data.currentItem = item;
         },
-        //az aktuálisan kiválszott user gettere
+        //the getter of the choosen user
         getCurrentItem: function(){
             return data.currentItem;
         },

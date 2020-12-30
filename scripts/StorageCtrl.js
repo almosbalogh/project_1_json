@@ -1,7 +1,7 @@
-//a json szerver metódusai
+//the json server's methods
 export const StorageCtrl = (function(){
     return{
-        //új user tárolása a szerveren
+        //saving new user on the server
         storeUser: async function(url, data){
           const response = await fetch(url, {
             method: 'POST',
@@ -10,19 +10,18 @@ export const StorageCtrl = (function(){
             },
             body: JSON.stringify(data)
           });
-          console.log("első");
           const resData = await response.json();
           return resData;
         },
 
-        //az összes user lekéredezése és visszaadása a szerverről
+        //fetching all users
         getUsersFromStorage: async function(url){
           const response = await fetch(url);
           const resData = await response.json();
           return resData;
         },
 
-        //az adott user frissített adatinak tárolása
+        //updating user data
         updateUsersStorage: async function(url, data){
           const response = await fetch(url, {
             method: 'PUT',
@@ -36,7 +35,7 @@ export const StorageCtrl = (function(){
           return resData;
         },
 
-        //user törlése a szerverről
+        //deleting user from the server
         deleteUserFromStorage: async function(url){
           const response = await fetch(url, {
             method: 'DELETE',

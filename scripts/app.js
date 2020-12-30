@@ -1,12 +1,12 @@
-import {UICtrl} from './UICtrl.js';
-import {UserCtrl} from './UserCtrl.js';
-import {ValidationCtrl} from './ValidationCtrl.js';
-import {StorageCtrl} from './StorageCtrl.js';
+import {UICtrl} from './uictrl.js';
+import {UserCtrl} from './userctrl.js';
+import {ValidationCtrl} from './validationctrl.js';
+import {StorageCtrl} from './storagectrl.js';
 
-//a 'main' js fájl
+//the 'main' js file
 const App = (function(UICtrl, UserCtrl, ValidationCtrl, StorageCtrl){
     let overallId;
-    //eventListenerek beolvasása
+    //reading EventListeners
     const loadEventListeners = function(){
         const UISelectors = UICtrl.getSelectors();
 
@@ -21,27 +21,26 @@ const App = (function(UICtrl, UserCtrl, ValidationCtrl, StorageCtrl){
 
     }
 
-    //a bejeletnkezési ablak mutatása
+    //showing the login form
     const showLogFromClick = function(){
         UICtrl.showLogForm();
     }
 
-    //a regisztrációs ablak mutatása
+    //showing the registration form
     const showRegFormClick = function(){
         UICtrl.showRegForm();
     }
 
-    //az admin ablak mutatása
+    //showing the admin window
     const showAdminPageClick = function(){
         StorageCtrl.getUsersFromStorage('http://localhost:3000/users')
             .then(data => UICtrl.showUserList(data))
             .catch(err => UICtrl.noUser());
     }
 
-    //a regisztráció végrehajtása
+    //executing the registration(saving the user)
     const userAddSubmit = function(e){
         if(e.target.classList.contains('regconfirm-button') && ValidationCtrl.validateEmail(e)===true && ValidationCtrl.validatePassword(e)===true /*&& ValidationCtrl.uniqueEmail(e)===true*/){
-            console.log("error");
             const input = UICtrl.getItemInput();
             let counter = 0;
             const newUser = UserCtrl.addItem(input.firstName, input.lastName, input.email, input.password);
@@ -51,26 +50,23 @@ const App = (function(UICtrl, UserCtrl, ValidationCtrl, StorageCtrl){
                 .then(elek => UICtrl.showRegistrationSuccess());
 
                 window.addEventListener('beforeunload', (event) => {
-                    // Cancel the event as stated by the standard.
                     event.preventDefault();
-                    // Chrome requires returnValue to be set.
                     event.returnValue = '';
                   });
             }   
         }
     }
 
-    //a bejelentkezési adatok ellenőrzése és a bejelentkezés végrehajtása
+    //validating the user input and executing login
     const loginSubmit = function(e){
         if(e.target.classList.contains('loginconfirm-button')){
-            
             const input = UICtrl.getLoginInput();
             const users = UserCtrl.getItems();
             let counter = 0;
+
             users.then(data =>
                 data.forEach(function(user){
                     if(input.loginEmail === user.email && input.loginPassword === user.password){
-                        console.log("what the fuck");
                         UICtrl.showLoginSuccess();
                         counter = 1;
                     }   
@@ -86,13 +82,11 @@ const App = (function(UICtrl, UserCtrl, ValidationCtrl, StorageCtrl){
         }
     }
 
-    //felhasználó törlés végrehajtása
+    //deleting the choosen user
     const userDeleteSubmit = function(e){
         if(e.target.classList.contains('delete-item')){
             const listId = e.target.parentNode.parentNode.id;
-            
             const listIdArr = listId.split('-');
-            
             const id = parseInt(listIdArr[1]);
 
             StorageCtrl.deleteUserFromStorage(`http://localhost:3000/users/${id}`)
@@ -100,16 +94,14 @@ const App = (function(UICtrl, UserCtrl, ValidationCtrl, StorageCtrl){
                 showAdminPageClick();
                 })
                 window.addEventListener('beforeunload', (event) => {
-                    // Cancel the event as stated by the standard.
                     event.preventDefault();
-                    // Chrome requires returnValue to be set.
                     event.returnValue = '';
                   });
         }
         e.preventDefault();
     }
 
-    //a szerkesztőfelület megnyitása
+    //opening the edit modal
     const editUserClick = function(e){
         if(e.target.classList.contains('edit-item')){
             const listId = e.target.parentNode.parentNode.id;
@@ -124,28 +116,23 @@ const App = (function(UICtrl, UserCtrl, ValidationCtrl, StorageCtrl){
         }
     }
 
-    //szerkesztésfelületen keresztül történő változtatások mentése
+    //saving the edited/updated user
     const editUserSubmit = function(e){
         const input = UICtrl.getEditInput();
         const updatedUser = UserCtrl.updateUser(input.firstName, input.lastName,input.email, input.password);
-        console.log(updatedUser);
         let counter = 0;
-        updatedUser
-        .then(
+        updatedUser.then(
         data =>  StorageCtrl.updateUsersStorage(`http://localhost:3000/users/${overallId}`, data)
             .then(data => {
                 showAdminPageClick();
                 counter = 1;
                 window.addEventListener('beforeunload', (event) => {
-                    // Cancel the event as stated by the standard.
                     event.preventDefault();
-                    // Chrome requires returnValue to be set.
                     event.returnValue = '';
                 });
             })
             .catch(err => console.log(err))
         );
-        /*UICtrl.cancelUserEdit();*/
     }
 
     return{

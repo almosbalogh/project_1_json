@@ -1,11 +1,11 @@
-import {UICtrl} from './UICtrl.js';
-import {UserCtrl} from './UserCtrl.js';
+import {UICtrl} from './uictrl.js';
+import {UserCtrl} from './userctrl.js';
 
 
-//A regisztrációs mezők validálásáért felelős metódusok
+//the methods responsible for user input validation
 export const ValidationCtrl = (function(UICtrl, UserCtrl){
     return{
-        //helyes e-mail formáért felelős metódus, helytelen e-mail megadása esetén hibaüzenet
+        //validating the email format, invalid email causes error message
         validateEmail: function(e){
             let messages = [];
             const errorElement = document.getElementById('erroremail');
@@ -25,7 +25,7 @@ export const ValidationCtrl = (function(UICtrl, UserCtrl){
 
         },
 
-        //az e-mail címek egyediségéért felelős metódus, létező e-mail esetén hibaüzenet
+        //checking if the given email is unique, if not, the user getting an error message
         uniqueEmail: async function(e){
             let messages = [];
             const errorElement = document.getElementById('erroremail');
@@ -43,23 +43,19 @@ export const ValidationCtrl = (function(UICtrl, UserCtrl){
                 messages.push('A megadott e-mail címmel már regisztráltak!');
                 e.preventDefault();
                 errorElement.innerText = messages.join(', ');
-                console.log("false");
                 return false;
             }
             else{
-                console.log("true");
                 return true;
             }
         },
 
-        //a két jelszó mezőben megadott érték egyezését vizsgáló metódus, nem egyezőség esetén hibaüzenet
+        //checking if the 'jelszó' and 'jelszó megerősítése' fields constains the same string, otherwise the user getting error message
         validatePassword: function(e){
             let messages = [];
             const errorElement = document.getElementById('errorpassword');
             errorElement.innerText = messages.join(', ');
             const input = UICtrl.getItemInput();
-            console.log(input.password);
-            console.log(input.scndPassword);
             if(input.password === input.scndPassword){
                 return true;
             }
