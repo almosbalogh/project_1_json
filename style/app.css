@@ -16,18 +16,22 @@
   }
 
   #errorlogin {
-    color: black;
+    color: rgb(252, 252, 252);
     font-size: 1em;
   }
 
   #erroremail {
-    color: black;
-    font-size: 1em;
+    color: rgb(252, 252, 252);
+    font-size: 0.9em;
+    margin-top: 5px;
+    margin-left: 15px;
   }
 
   #errorpassword {
-    color: black;
-    font-size: 1em;
+    color: rgb(252, 252, 252);
+    font-size: 0.9em;
+    margin-top: 5px;
+    margin-left: 15px;
   }
 
   #burger {

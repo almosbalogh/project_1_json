@@ -36,24 +36,24 @@ export const UICtrl = (function(){
             <div class="col-md-3 mx-auto" style="width: 300px;" id="regForm">
             <h1>Regisztráció</h1>
             <form>
-              <div class="form-group">
+              <div class="form-group mx-auto">
                 <label><strong>Vezetéknév</strong></label>
                 <input type="text" class="form-control" id="vnev" placeholder="Vezetéknév">
               </div>
-              <div class="form-group">
+              <div class="form-group mx-auto">
                 <label><strong>Keresztnév</strong></label>
                 <input type="text" class="form-control" id="knev" placeholder="Keresztnév">
               </div>
-              <div class="form-group">
+              <div class="form-group mx-auto">
                 <label><strong>E-mail cím</strong></label>
                 <input type="text" class="form-control" id="email" placeholder="E-mail cím">
                 <span class="badge bg-danger red" id="erroremail"></span>
               </div>
-              <div class="form-group">
+              <div class="form-group mx-auto">
                 <label><strong>Jelszó</strong></label>
                 <input type="password" class="form-control" id="jelszo" placeholder="Jelszó">
               </div>
-              <div class="form-group">
+              <div class="form-group mx-auto">
                 <label><strong>Jelszó mégegyszer</strong></label>
                 <input type="password" class="form-control" id="scndjelszo" placeholder="Jelszó mégegyszer">
                 <div class="badge bg-danger red" id="errorpassword"></div>
