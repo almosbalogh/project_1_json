@@ -6,18 +6,18 @@ import {UserCtrl} from './userctrl.js';
 export const ValidationCtrl = (function(UICtrl, UserCtrl){
     return{
         //validating the email format, invalid email causes error message
-        validateEmail: function(e){
+        validateEmail: function(e, input){
             let messages = [];
             const errorElement = document.getElementById('erroremail');
             errorElement.innerText = messages.join(', ');
-            const input = UICtrl.getItemInput();
             const re = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
 
             if(!re.test(input.email)){
                 messages.push('Helytelenül megadott e-mail cím!');
                 e.preventDefault();
                 errorElement.innerText = messages.join(', ');
-                return false;
+                console.log("false");
+                return false; 
             }
             else{
                 return true;

@@ -40,8 +40,8 @@ const App = (function(UICtrl, UserCtrl, ValidationCtrl, StorageCtrl){
 
     //executing the registration(saving the user)
     const userAddSubmit = function(e){
-        if(e.target.classList.contains('regconfirm-button') && ValidationCtrl.validateEmail(e)===true && ValidationCtrl.validatePassword(e)===true /*&& ValidationCtrl.uniqueEmail(e)===true*/){
-            const input = UICtrl.getItemInput();
+        const input = UICtrl.getItemInput();
+        if(e.target.classList.contains('regconfirm-button') && ValidationCtrl.validateEmail(e, input)===true && ValidationCtrl.validatePassword(e, input)===true /*&& ValidationCtrl.uniqueEmail(e, input)===true*/){
             let counter = 0;
             const newUser = UserCtrl.addItem(input.firstName, input.lastName, input.email, input.password);
             
@@ -119,20 +119,26 @@ const App = (function(UICtrl, UserCtrl, ValidationCtrl, StorageCtrl){
     //saving the edited/updated user
     const editUserSubmit = function(e){
         const input = UICtrl.getEditInput();
-        const updatedUser = UserCtrl.updateUser(input.firstName, input.lastName,input.email, input.password);
-        let counter = 0;
-        updatedUser.then(
-        data =>  StorageCtrl.updateUsersStorage(`http://localhost:3000/users/${overallId}`, data)
-            .then(data => {
-                showAdminPageClick();
-                counter = 1;
-                window.addEventListener('beforeunload', (event) => {
-                    event.preventDefault();
-                    event.returnValue = '';
-                });
-            })
-            .catch(err => console.log(err))
-        );
+        if(ValidationCtrl.validateEmail(e, input)===true && ValidationCtrl.validatePassword(e, input)===true /*&& ValidationCtrl.uniqueEmail(e, input)===true*/){
+            const updatedUser = UserCtrl.updateUser(input.firstName, input.lastName,input.email, input.password);
+            let counter = 0;
+            updatedUser.then(
+            data =>  StorageCtrl.updateUsersStorage(`http://localhost:3000/users/${overallId}`, data)
+                .then(data => {
+                    showAdminPageClick();
+                    counter = 1;
+                    window.addEventListener('beforeunload', (event) => {
+                        event.preventDefault();
+                        event.returnValue = '';
+                    });
+                })
+                .catch(err => console.log(err))
+            );
+        }
+        else{
+            let item = document.querySelector(".modal-footer").childNodes[0];
+            item.replaceChild(`<button class="btn btn-success" id="save-button">Mentés</button>`, item.childNodes[0]);
+        }
     }
 
     return{
