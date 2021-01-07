@@ -20,6 +20,9 @@ export const ValidationCtrl = (function(UICtrl, UserCtrl){
                 return false; 
             }
             else{
+                messages.push('');
+                e.preventDefault();
+                errorElement.innerText = messages.join(', ');
                 return true;
             }
 
@@ -51,20 +54,27 @@ export const ValidationCtrl = (function(UICtrl, UserCtrl){
         },
 
         //checking if the 'jelszó' and 'jelszó megerősítése' fields constains the same string, otherwise the user getting error message
-        validatePassword: function(e){
+        validatePassword: function(e, input){
             let messages = [];
             const errorElement = document.getElementById('errorpassword');
             errorElement.innerText = messages.join(', ');
-            const input = UICtrl.getItemInput();
             if(input.password === input.scndPassword){
+                messages.push('');
+                e.preventDefault();
+                errorElement.innerText = messages.join(', ');
                 return true;
             }
             else{
                 messages.push('A két jelszó nem egyezik!');
                 e.preventDefault();
                 errorElement.innerText = messages.join(', ');
+                console.log("false2");
                 return false;
             }
         },
+
+        checkAll: function(e, input){
+            return this.validateEmail(e, input) & this.validatePassword(e, input);
+        }
     }
 })(UICtrl, UserCtrl);

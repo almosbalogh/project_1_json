@@ -47,7 +47,7 @@ export const UICtrl = (function(){
               <div class="form-group mx-auto">
                 <label><strong>E-mail cím</strong></label>
                 <input type="text" class="form-control" id="email" placeholder="E-mail cím">
-                <span class="badge bg-danger red" id="erroremail"></span>
+                <div class="badge bg-danger red" id="erroremail"></div>
               </div>
               <div class="form-group mx-auto">
                 <label><strong>Jelszó</strong></label>

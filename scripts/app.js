@@ -41,7 +41,7 @@ const App = (function(UICtrl, UserCtrl, ValidationCtrl, StorageCtrl){
     //executing the registration(saving the user)
     const userAddSubmit = function(e){
         const input = UICtrl.getItemInput();
-        if(e.target.classList.contains('regconfirm-button') && ValidationCtrl.validateEmail(e, input)===true && ValidationCtrl.validatePassword(e, input)===true /*&& ValidationCtrl.uniqueEmail(e, input)===true*/){
+        if(e.target.classList.contains('regconfirm-button') && ValidationCtrl.checkAll(e, input) /*&& ValidationCtrl.uniqueEmail(e, input)===true*/){
             let counter = 0;
             const newUser = UserCtrl.addItem(input.firstName, input.lastName, input.email, input.password);
             
