@@ -73,7 +73,8 @@ export const ValidationCtrl = (function(UICtrl, UserCtrl){
             }
         },
 
-        checkAll: function(e, input){
+        checkAll: function(e){
+            const input = UICtrl.getItemInput();
             return this.validateEmail(e, input) & this.validatePassword(e, input);
         }
     }

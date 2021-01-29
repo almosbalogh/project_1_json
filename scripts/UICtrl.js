@@ -30,40 +30,14 @@ export const UICtrl = (function(){
     return {
         //rendering the registration form by dom manipulation
         showRegForm: function(){
-            let html = '';
-            html += `
-            <div class="row">
-            <div class="col-md-3 mx-auto" style="width: 300px;" id="regForm">
-            <h1>Regisztráció</h1>
-            <form>
-              <div class="form-group mx-auto">
-                <label><strong>Vezetéknév</strong></label>
-                <input type="text" class="form-control" id="vnev" placeholder="Vezetéknév">
-              </div>
-              <div class="form-group mx-auto">
-                <label><strong>Keresztnév</strong></label>
-                <input type="text" class="form-control" id="knev" placeholder="Keresztnév">
-              </div>
-              <div class="form-group mx-auto">
-                <label><strong>E-mail cím</strong></label>
-                <input type="text" class="form-control" id="email" placeholder="E-mail cím">
-                <div class="badge bg-danger red" id="erroremail"></div>
-              </div>
-              <div class="form-group mx-auto">
-                <label><strong>Jelszó</strong></label>
-                <input type="password" class="form-control" id="jelszo" placeholder="Jelszó">
-              </div>
-              <div class="form-group mx-auto">
-                <label><strong>Jelszó mégegyszer</strong></label>
-                <input type="password" class="form-control" id="scndjelszo" placeholder="Jelszó mégegyszer">
-                <div class="badge bg-danger red" id="errorpassword"></div>
-              </div>
-              <input type="hidden" id="id" value="">
-            </form>
-            <button class="regconfirm-button btn btn-primary blue" id="reg-confirm">Regisztráció</button>
-            </div>
-            </div>`;
-            document.querySelector(UISelectors.playfield).innerHTML = html;
+            const regForm = document.getElementById("registration");
+            const logForm = document.getElementById("logForm");
+            if (regForm.style.display === "none") {
+              regForm.style.display = "block";
+              logForm.style.display = "none";
+            } else {
+              regForm.style.display = "none";
+            }
         },
 
         //message about the successful registration
@@ -76,24 +50,14 @@ export const UICtrl = (function(){
 
         //rendering the login form by dom manipulation
         showLogForm: function(){
-            let html = '';
-            html += `<div class="col-md-3 mx-auto" style="width: 300px;" id="logForm">
-            <h1>Bejelentkezés</h1>
-            <form>
-              <div class="form-group">
-                <label><strong>E-mail cím</strong></label>
-                <input type="text" class="form-control" id="lemail">
-              </div>
-              <div class="form-group">
-                <label><strong>Jelszó</strong></label>
-                <input type="password" class="form-control" id="ljelszo">
-                <div class="badge bg-danger red" id="errorlogin"></div>
-              </div>
-              <button class="loginconfirm-button btn btn-primary blue" id="reg-confirm">Bejelentkezés</button>
-            </form>
-          </div>
-        </div>`;
-        document.querySelector(UISelectors.playfield).innerHTML = html; 
+            const regForm = document.getElementById("registration");
+            const logForm = document.getElementById("logForm");
+            if (logForm.style.display === "none") {
+              logForm.style.display = "block";
+              regForm.style.display = "none";
+            } else {
+              logForm.style.display = "none";
+            }
         },
 
         //message about the successful login
@@ -118,16 +82,36 @@ export const UICtrl = (function(){
             `;
             items.forEach(function(item){
                 html += `<ul id="user-list" class="list-group">
+                    <button class="collapsible">
                     <li class="list-group-item d-flex justify-content-between align-items-center" id="item-${item.id}">
-                    <strong>${item.firstName} ${item.lastName} </strong> <em>${item.email}</em> <em>${item.password}</em> 
+                    <strong>${item.firstName} ${item.lastName} </strong> <em>${item.email}</em>
+                </li>
+                </button>
+                <div class="content" id="item-${item.id}">
                     <a href="#" class="secondary-content">
                     <i class="edit-item fa fa-pencil" data-bs-toggle="modal" data-bs-target="#add-modal"></i>
                     <i class="delete-item fa fa-minus-square"></i>
                     </a>
-                </li>
+                </div>
                 </ul>`;
             });
             document.querySelector(UISelectors.playfield).innerHTML = html;
+
+            let coll = document.getElementsByClassName("collapsible");
+            console.log(coll);
+            let i;
+            
+            for (i = 0; i < coll.length; i++) {
+              coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                let content = this.nextElementSibling;
+                if (content.style.maxHeight){
+                  content.style.maxHeight = null;
+                } else {
+                  content.style.maxHeight = content.scrollHeight + "px";
+                } 
+              });
+            }
         },
 
         //message if the user list is empty
